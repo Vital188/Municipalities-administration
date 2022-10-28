@@ -1,55 +1,54 @@
 import { useState, useEffect } from 'react';
-import Regions from '../../Contexts/Regions';
+import Field from '../../Contexts/Field';
 import DataContext from '../../Contexts/DataContext';
 import Create from './Create';
-import List from './List';
 import axios from 'axios';
 import Edit from './Edit';
 import { authConfig } from '../../Functions/auth';
 import { useContext } from 'react';
- 
+import Listas from '../field/Listas'; 
 
 function Main() {
 
     const [lastUpdate, setLastUpdate] = useState(Date.now());
     const [createData, setCreateData] = useState(null);
-    const [regionai, setRegionai] = useState(null);
+    const [field, setField] = useState(null)
     const [deleteData, setDeleteData] = useState(null);
     const [modalData, setModalData] = useState(null);
     const [editData, setEditData] = useState(null);
     const { makeMsg } = useContext(DataContext);
 
     // READ for list
-    useEffect(() => {
-        axios.get('http://localhost:3003/server/regionai', authConfig())
-            .then(res => {
-                setRegionai(res.data);
-            })
-    }, [lastUpdate]);
-
     // useEffect(() => {
-    //     axios.get('http://localhost:3003/server/field', authConfig())
+    //     axios.get('http://localhost:3003/server/regionai', authConfig())
     //         .then(res => {
-    //             setField(res.data);
+    //             setRegionai(res.data);
     //         })
     // }, [lastUpdate]);
+
+    useEffect(() => {
+        axios.get('http://localhost:3003/server/field', authConfig())
+            .then(res => {
+                setField(res.data);
+            })
+    }, [lastUpdate]);
 
     useEffect(() => {
         if (null === createData) {
             return;
         }
-        axios.post('http://localhost:3003/server/regionai', createData, authConfig())
+        axios.post('http://localhost:3003/server/field', createData, authConfig())
             .then(res => {
                 setLastUpdate(Date.now());
                 makeMsg(res.data.text, res.data.type);
             });
     }, [createData, makeMsg]);
-
+console.log(field)
     useEffect(() => {
         if (null === deleteData) {
             return;
         }
-        axios.delete('http://localhost:3003/server/regionai/' + deleteData.id, authConfig())
+        axios.delete('http://localhost:3003/server/field/' + deleteData.id, authConfig())
             .then(res => {
                 setLastUpdate(Date.now());
                 makeMsg(res.data.text, res.data.type);
@@ -60,23 +59,22 @@ function Main() {
         if (null === editData) {
             return;
         }
-        axios.put('http://localhost:3003/server/regionai/' + editData.id, editData, authConfig())
+        axios.put('http://localhost:3003/server/field/' + editData.id, editData, authConfig())
             .then(res => {
                 setLastUpdate(Date.now());
                 makeMsg(res.data.text, res.data.type);
             });
     }, [editData, makeMsg]);
 
-   console.log(regionai)
+
     return (
-        <Regions.Provider value={{
+        <Field.Provider value={{
             setCreateData,
-            regionai,
             setDeleteData,
             modalData,
             setModalData,
             setEditData,
-           
+            field
         }}>
             <div className="container">
                 <div className="row">
@@ -84,13 +82,12 @@ function Main() {
                         <Create />
                     </div>
                     <div className="col col-lg-8 col-md-12">
-                        <List />
-                      
+                        <Listas />
                     </div>
                 </div>
             </div>
             <Edit />
-        </Regions.Provider>
+        </Field.Provider>
     )
 }
 export default Main;

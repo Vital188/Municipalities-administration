@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState, useRef } from 'react';
-import Regions from '../../Contexts/Regions';
+import Field from '../../Contexts/Field';
 import getBase64 from '../../Functions/getBase64';
 
 function Edit() {
 
-    const [region, setRegion] = useState('');
+
+    const [title, setTitle] = useState('');
     const fileInput = useRef();
     const [photoPrint, setPhotoPrint] = useState(null);
     const [deletePhoto, setDeletePhoto] = useState(false);
@@ -17,11 +18,11 @@ function Edit() {
             })
     }
 
-    const { setEditData, modalData, setModalData } = useContext(Regions);
+    const { setEditData, modalData, setModalData } = useContext(Field);
 
     const edit = () => {
         setEditData({
-            region,
+            title,
             id: modalData.id,
             deletePhoto: deletePhoto ? 1 : 0,
             image: photoPrint
@@ -34,7 +35,7 @@ function Edit() {
         if (null === modalData) {
             return;
         }
-        setRegion(modalData.region);
+        setTitle(modalData.title);
         setPhotoPrint(modalData.image);
         setDeletePhoto(false);
     }, [modalData])
@@ -49,18 +50,18 @@ function Edit() {
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-region">Edit regions and field</h5>
+                        <h5 className="modal-region">Edit service</h5>
                         <button onClick={() => setModalData(null)} type="button" className="btn-close"></button>
                     </div>
                     <div className="modal-body"></div>
                     <div className="card m-4">
                         <div className="card-body">
                             <div className="mb-3">
-                                <label className="form-label">Region</label>
-                                <input type="text" className="form-control" value={region} onChange={e => setRegion(e.target.value)} />
+                                <label className="form-label">Service</label>
+                                <input type="text" className="form-control" value={title} onChange={e => setTitle(e.target.value)} />
                             </div>
                             <div className="mb-3">
-                                <label className="form-label">Regions Image</label>
+                                <label className="form-label">Service image</label>
                                 <input ref={fileInput} type="file" className="form-control" onChange={doPhoto} />
                             </div>
                             {photoPrint ? <div className='img-bin'>

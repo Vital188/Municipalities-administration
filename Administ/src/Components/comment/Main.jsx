@@ -8,7 +8,7 @@ import DataContext from "../../Contexts/DataContext";
 function Main() {
 
     const [lastUpdate, setLastUpdate] = useState(Date.now());
-    const [movies, setMovies] = useState(null);
+    const [regions, setRegions] = useState(null);
     const [comment, setComment] = useState(null);
     const { makeMsg } = useContext(DataContext);
 
@@ -26,9 +26,9 @@ function Main() {
 
     // READ for list
     useEffect(() => {
-        axios.get('http://localhost:3003/server/movies/wc', authConfig())
+        axios.get('http://localhost:3003/server/regionai/wc', authConfig())
             .then(res => {
-                setMovies(reList(res.data));
+                setRegions(reList(res.data));
             })
     }, [lastUpdate]);
 
@@ -46,7 +46,7 @@ function Main() {
     return (
         <Comment.Provider value={{
             setComment,
-            movies
+            regions
         }}>
             <div className="container">
                 <div className="row">

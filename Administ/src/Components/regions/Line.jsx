@@ -6,6 +6,7 @@ function Line({ regionai }) {
     const { setDeleteData, setModalData } = useContext(Regions);
 
     return (
+        <>
         <li className="list-group-item">
             <div className="line">
                 <div className="line__content">
@@ -18,9 +19,6 @@ function Line({ regionai }) {
                     <div className="line__content__title">
                         {regionai.region}
                     </div>
-                    <div className="line__content__info">
-                        {regionai.field}
-                    </div>
                    </div>
                 <div className="line__buttons">
                     <button onClick={() => setModalData(regionai)} type="button" className="btn btn-outline-success">Edit</button>
@@ -28,6 +26,8 @@ function Line({ regionai }) {
                 </div>
             </div>
         </li>
+         
+      </>
     )
 }
 

@@ -5,24 +5,24 @@ import Line from './Line';
 
 function List() {
 
-    const { movies } = useContext(Comment);
-    const [stats, setStats] = useState({ movieCount: null });
+    const { regions } = useContext(Comment);
+    const [stats, setStats] = useState({ regionCount: null });
 
 
     useEffect(() => {
-        if (null === movies) {
+        if (null === regions) {
             return;
         }
-        setStats(s => ({ ...s, movieCount: movies.length }));
-    }, [movies]);
+        setStats(s => ({ ...s, regionCount: regions.length }));
+    }, [regions]);
 
     return (
         <div className="card m-4">
-            <h5 className="card-header">Movies List ({stats.movieCount})</h5>
+            <h5 className="card-header">regions List ({stats.regionCount})</h5>
             <div className="card-body">
                 <ul className="list-group">
                     {
-                        movies?.map(m => <Line key={m[1][0].id} movie={m} />)
+                        regions?.map(r => <Line key={r[1][0].id} region={r} />)
                     }
                 </ul>
             </div>

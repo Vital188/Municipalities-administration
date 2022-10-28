@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 3003;
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: '20mb' }));
 const cors = require("cors");
 app.use(cors());
 const md5 = require('js-md5');
@@ -131,17 +131,30 @@ app.post("/register", (req, res) => {
 //CREATE
 app.post("/server/regionai", (req, res) => {
     const sql = `
-    INSERT INTO regionai (region, field, image)
-    VALUES (?, ?, ?)
+    INSERT INTO regionai (region, image)
+    VALUES (?, ?)
     `;
-    con.query(sql, [req.body.region, req.body.field, req.body.image], (err, result) => {
+    con.query(sql, [req.body.region,  req.body.image], (err, result) => {
         if (err) throw err;
-        res.send({ msg: 'OK', text: 'New place and field was added.', type: 'success' });
+        res.send({ msg: 'OK', text: 'New municipality was added.', type: 'success' });
     });
 });
+
+ app.post("/server/field", (req, res) => {
+     const sql = `
+     INSERT INTO field (title, image2)
+     VALUES (?, ?)
+     `;
+     con.query(sql, [req.body.title, req.body.image2], (err, result) => {
+         if (err) throw err;
+         res.send({ msg: 'OK', text: 'New services was added.', type: 'success' });
+     });
+ });
+
+
 app.post("/home/comments/:id", (req, res) => {
     const sql = `
-    INSERT INTO comments (post, region_id)
+    INSERT INTO comments (post, regionai_id)
     VALUES (?, ?)
     `;
     con.query(sql, [req.body.post, req.params.id], (err, result) => {
@@ -153,8 +166,20 @@ app.post("/home/comments/:id", (req, res) => {
 // READ (all)
 app.get("/server/regionai", (req, res) => {
     const sql = `
-    SELECT *
+    SELECT id, region, image
     FROM regionai
+    ORDER BY id DESC
+    `;
+    con.query(sql,  (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+app.get("/server/field", (req, res) => {
+    const sql = `
+    SELECT *
+    FROM field
     ORDER BY id DESC
     `;
     con.query(sql, (err, result) => {
@@ -162,11 +187,13 @@ app.get("/server/regionai", (req, res) => {
         res.send(result);
     });
 });
+
+
 app.get("/home/regionai", (req, res) => {
     const sql = `
     SELECT r.*, c.id AS cid, c.post
     FROM regionai AS r
-    LEFT JOIN cats AS c
+    LEFT JOIN comments AS c
     ON c.regionai_id = r.id
     ORDER BY r.region
     `;
@@ -179,7 +206,7 @@ app.get("/server/regionai/wc", (req, res) => {
     const sql = `
     SELECT r.*, c.id AS cid, c.post
     FROM regionai AS r
-    INNER JOIN cats AS c
+    INNER JOIN comments AS c
     ON c.regionai_id = r.id
     ORDER BY r.region
     `;
@@ -199,9 +226,21 @@ app.delete("/server/regionai/:id", (req, res) => {
     `;
     con.query(sql, [req.params.id], (err, result) => {
         if (err) throw err;
-        res.send({ msg: 'OK', text: 'The regions and field was deleted.', type: 'info' });
+        res.send({ msg: 'OK', text: 'The municipality was deleted.', type: 'info' });
     });
 });
+
+app.delete("/server/field/:id", (req, res) => {
+    const sql = `
+    DELETE FROM field
+    WHERE id = ?
+    `;
+    con.query(sql, [req.params.id], (err, result) => {
+        if (err) throw err;
+        res.send({ msg: 'OK', text: 'The service was deleted.', type: 'info' });
+    });
+});
+
 app.delete("/server/comments/:id", (req, res) => {
     const sql = `
     DELETE FROM comments
@@ -235,30 +274,64 @@ app.put("/server/regionai/:id", (req, res) => {
     if (req.body.deletePhoto) {
         sql = `
         UPDATE regionai
-        SET region = ?, field = ?, image = null
+        SET region = ?, image = null
         WHERE id = ?
         `;
-        r = [req.body.region, req.body.field, req.params.id];
+        r = [req.body.region, req.params.id];
     } else if (req.body.image) {
         sql = `
         UPDATE regionai
-        SET region = ?, field = ?, image = ?
+        SET region = ?, image = ?
         WHERE id = ?
         `;
-        r = [req.body.region, req.body.field, req.body.image, req.params.id];
-    } else {
-        sql = `
-        UPDATE regionai
-        SET region = ?, field = ?
-        WHERE id = ?
-        `;
-        r = [req.body.region, req.body.field, req.params.id]
+        r = [req.body.region, req.body.image, req.params.id];
     }
+    // } else {
+    //     sql = `
+    //     UPDATE regionai
+    //     SET region = ?, 
+    //     WHERE id = ?
+    //     `;
+    //     r = [req.body.region, req.params.id]
+    // }
     con.query(sql, r, (err, result) => {
         if (err) throw err;
         res.send({ msg: 'OK', text: 'The region and field was edited.', type: 'success' });
     });
 });
+
+app.put("/server/field/:id", (req, res) => {
+    let sql;
+    let r;
+    if (req.body.deletePhoto) {
+        sql = `
+        UPDATE field
+        SET title = ?, image = null
+        WHERE id = ?
+        `;
+        r = [req.body.title, req.params.id];
+    } else if (req.body.image) {
+        sql = `
+        UPDATE field
+        SET title = ?, image = ?
+        WHERE id = ?
+        `;
+        r = [req.body.title, req.body.image, req.params.id];
+    } else {
+        sql = `
+        UPDATE field
+        SET title = ?, 
+        WHERE id = ?
+        `;
+        r = [req.body.title, req.params.id]
+    }
+    con.query(sql, r, (err, result) => {
+        if (err) throw err;
+        res.send({ msg: 'OK', text: 'The service was edited.', type: 'success' });
+    });
+});
+
+
 
 app.listen(port, () => {
     console.log(`Administration portala rodo per ${port} portą!`)

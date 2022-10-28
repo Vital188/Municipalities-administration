@@ -17,10 +17,10 @@ function Main() {
         const reList = data => {
             const d = new Map();
             data.forEach(line => {
-                if (d.has(line.title)) {
-                    d.set(line.title, [...d.get(line.title), line]);
+                if (d.has(line.region)) {
+                    d.set(line.region, [...d.get(line.region), line]);
                 } else {
-                    d.set(line.title, [line]);
+                    d.set(line.region, [line]);
                 }
             });
             return [...d];
@@ -45,7 +45,7 @@ function Main() {
                 makeMsg(res.data.text, res.data.type);
             })
          }, [comment, makeMsg]);
-
+     console.log(comment)
         // useEffect(() => {
         //     if (null === rateData) {
         //         return;

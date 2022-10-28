@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import Comment from '../../Contexts/Comment';
 
-function Line({ movie }) {
+function Line({ region }) {
 
     const { setComment } = useContext(Comment);
 
@@ -14,21 +14,21 @@ function Line({ movie }) {
             <div className="home">
                 <div className="home__content">
                     <div className="home__content__info">
-                        <h2>{movie[0]} <small>({movie[1].length})</small></h2>
-                        {movie[1][0].image ? <div className='img-bin'>
-                            <img src={movie[1][0].image} alt={movie[0]}>
+                        <h2>{region[0]} <small>({region[1].length})</small></h2>
+                        {region[1][0].image ? <div className='img-bin'>
+                            <img src={region[1][0].image} alt={region[0]}>
                             </img>
                         </div> : null}
                     </div>
                     <div className="home__content__price">
-                        {movie[1][0].price} Eur
+                        {region[1][0].price} Eur
                     </div>
                 </div>
             </div>
             <div className="comments">
                 <ul className="list-group">
                     {
-                        movie[1]?.map(c => c.cid !== null ? <li key={c.cid} className="list-group-item">
+                        region[1]?.map(c => c.cid !== null ? <li key={c.cid} className="list-group-item">
                             <p>{c.post}</p>
                             <div className="home__buttons">
                                 <button onClick={() => remove(c.cid)} type="button" className="btn btn-outline-danger">Delete</button>

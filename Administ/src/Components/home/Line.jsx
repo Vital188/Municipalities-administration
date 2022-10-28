@@ -21,7 +21,7 @@ function Line({ regions }) {
     const add = () => {
         setComment({
             post,
-            regions_id: regions[1][0].id
+            regionai_id: regions[1][0].id
         });
         setPost('');
     }

@@ -4,6 +4,7 @@ import Nav from './Components/Nav';
 import Home from './Components/home/Main';
 import MainComments from './Components/comment/Main';
 import MainRegions from './Components/regions/Main';
+import MainField from './Components/field/Main';
 import RegisterPage from './Components/register/Main';
 import { login, logout, authConfig } from './Functions/auth';
 import { useState, useEffect, useCallback, useContext } from 'react';
@@ -55,6 +56,7 @@ function App() {
           <Route path="/login" element={<LoginPage setRoleChange={setRoleChange} />} />
           <Route path="/logout" element={<LogoutPage setRoleChange={setRoleChange} />} />
           <Route path="/regions" element={<RequireAuth role="admin"><MainRegions /></RequireAuth>}></Route>
+          <Route path="/field" element={<RequireAuth role="admin"><MainField /></RequireAuth>}></Route>
           <Route path="/comments" element={<RequireAuth role="admin"><MainComments /></RequireAuth>}></Route>
           <Route path="/register" element={<RegisterPage setRoleChange={setRoleChange} />} />
         </Routes>

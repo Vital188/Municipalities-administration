@@ -1,29 +1,31 @@
 import { useState, useContext, useRef } from 'react';
 import DataContext from '../../Contexts/DataContext';
-import Regions from '../../Contexts/Regions';
+import Field from '../../Contexts/Field'
 import getBase64 from '../../Functions/getBase64';
 
 function Create() {
 
-    const [region, setRegion] = useState('');
+    const [title, setTitle] = useState('');
     const fileInput = useRef();
 
-    const { setCreateData } = useContext(Regions);
+    const { setCreateData } = useContext(Field);
     const {makeMsg} = useContext(DataContext);
 
-    const [photoPrint, setPhotoPrint] = useState(null);
+    const [photoPrint2, setPhotoPrint2] = useState(null);
 
     const doPhoto = () => {
         getBase64(fileInput.current.files[0])
-            .then(photo => setPhotoPrint(photo))
+            .then(photo => setPhotoPrint2(photo))
             .catch(_ => {
                 // tylim
             })
     }
 
 
+
+
     const add = () => {
-        if (region.length === 0 || region.length > 50) {
+        if (title.length === 0 || title.length > 50) {
             makeMsg('Invalid region', 'error');
             return;
         }
@@ -32,11 +34,11 @@ function Create() {
 
 
         setCreateData({
-            region,
-            image: photoPrint,
+            title,
+            image2: photoPrint2
         });
-        setRegion('');
-        setPhotoPrint(null);
+        setTitle('')
+        setPhotoPrint2(null);
         fileInput.current.value = null;
         
     }
@@ -44,21 +46,21 @@ function Create() {
     return (
         <>
         <div className="card m-4">
-            <h5 className="card-header">New municipality </h5>
+            <h5 className="card-header">New services </h5>
             <div className="card-body">
                 <div className="mb-3">
-                    <label className="form-label">Municipality</label>
-                    <input type="text" className="form-control" value={region} onChange={e => setRegion(e.target.value)} />
+                    <label className="form-label">Services</label>
+                    <input type="text" className="form-control" value={title} onChange={e => setTitle(e.target.value)} />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Municipality image</label>
+                    <label className="form-label">Service image</label>
                     <input ref={fileInput} type="file" className="form-control" onChange={doPhoto} />
                 </div>
-                {photoPrint ? <div className='img-bin'><img src={photoPrint} alt="upload"></img></div> : null}
+                {photoPrint2 ? <div className='img-bin'><img src={photoPrint2} alt="upload"></img></div> : null}
                 <button onClick={add} type="button" className="btn btn-outline-success">Add</button>
             </div>
         </div>
-       
+
     </>
     );
 }
