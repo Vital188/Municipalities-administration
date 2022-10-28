@@ -5,8 +5,8 @@ import getBase64 from '../../Functions/getBase64';
 
 function Create() {
 
-    const [title, setTitle] = useState('');
-    const [price, setPrice] = useState('');
+    const [region, setRegion] = useState('');
+    const [field, setField] = useState('');
     const fileInput = useRef();
 
     const { setCreateData } = useContext(Movies);
@@ -23,46 +23,39 @@ function Create() {
     }
 
     const add = () => {
-        if (title.length === 0 || title.length > 50) {
-            makeMsg('Invalid title', 'error');
+        if (region.length === 0 || region.length > 50) {
+            makeMsg('Invalid region', 'error');
             return;
         }
-        if (price.replace(/[^\d.]/, '') !== price) {
-            makeMsg('Invalid price', 'error');
-            return;
-        }
-        if (parseFloat(price) > 99.99) {
-            makeMsg('Max price is 99.99', 'error');
-            return;
-        }
+       
 
 
 
         setCreateData({
-            title,
-            price: parseFloat(price),
+            region,
+            field,
             image: photoPrint
         });
-        setTitle('');
-        setPrice('');
+        setRegion('');
+        setField('');
         setPhotoPrint(null);
         fileInput.current.value = null;
     }
 
     return (
         <div className="card m-4">
-            <h5 className="card-header">New Movie</h5>
+            <h5 className="card-header">New region and field</h5>
             <div className="card-body">
                 <div className="mb-3">
-                    <label className="form-label">Movie title</label>
-                    <input type="text" className="form-control" value={title} onChange={e => setTitle(e.target.value)} />
+                    <label className="form-label">Region</label>
+                    <input type="text" className="form-control" value={region} onChange={e => setRegion(e.target.value)} />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Movie Price</label>
-                    <input type="text" className="form-control" value={price} onChange={e => setPrice(e.target.value)} />
+                    <label className="form-label">Field</label>
+                    <input type="text" className="form-control" value={field} onChange={e => setField(e.target.value)} />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Movie Image</label>
+                    <label className="form-label">Region Image</label>
                     <input ref={fileInput} type="file" className="form-control" onChange={doPhoto} />
                 </div>
                 {photoPrint ? <div className='img-bin'><img src={photoPrint} alt="upload"></img></div> : null}

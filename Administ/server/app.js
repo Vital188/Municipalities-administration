@@ -19,7 +19,7 @@ const con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "ruoniu_filmai_3",
+    database: "admin",
 });
 
 ////////////////////LOGIN/////////////////
@@ -129,19 +129,19 @@ app.post("/register", (req, res) => {
 
 
 //CREATE
-app.post("/server/movies", (req, res) => {
+app.post("/server/regionai", (req, res) => {
     const sql = `
-    INSERT INTO movies (title, price, image)
+    INSERT INTO regionai (region, field, image)
     VALUES (?, ?, ?)
     `;
-    con.query(sql, [req.body.title, req.body.price, req.body.image], (err, result) => {
+    con.query(sql, [req.body.region, req.body.field, req.body.image], (err, result) => {
         if (err) throw err;
-        res.send({ msg: 'OK', text: 'New movie was added.', type: 'success' });
+        res.send({ msg: 'OK', text: 'New place and field was added.', type: 'success' });
     });
 });
 app.post("/home/comments/:id", (req, res) => {
     const sql = `
-    INSERT INTO comments (post, movie_id)
+    INSERT INTO comments (post, region_id)
     VALUES (?, ?)
     `;
     con.query(sql, [req.body.post, req.params.id], (err, result) => {
@@ -151,10 +151,10 @@ app.post("/home/comments/:id", (req, res) => {
 });
 
 // READ (all)
-app.get("/server/movies", (req, res) => {
+app.get("/server/regionai", (req, res) => {
     const sql = `
     SELECT *
-    FROM movies
+    FROM regionai
     ORDER BY id DESC
     `;
     con.query(sql, (err, result) => {
@@ -162,26 +162,26 @@ app.get("/server/movies", (req, res) => {
         res.send(result);
     });
 });
-app.get("/home/movies", (req, res) => {
+app.get("/home/regionai", (req, res) => {
     const sql = `
-    SELECT m.*, c.id AS cid, c.post
-    FROM movies AS m
+    SELECT r.*, c.id AS cid, c.post
+    FROM regionai AS r
     LEFT JOIN comments AS c
-    ON c.movie_id = m.id
-    ORDER BY m.title
+    ON c.regionai_id = r.id
+    ORDER BY r.region
     `;
     con.query(sql, (err, result) => {
         if (err) throw err;
         res.send(result);
     });
 });
-app.get("/server/movies/wc", (req, res) => {
+app.get("/server/regionai/wc", (req, res) => {
     const sql = `
-    SELECT m.*, c.id AS cid, c.post
-    FROM movies AS m
+    SELECT r.*, c.id AS cid, c.post
+    FROM regionai AS r
     INNER JOIN comments AS c
-    ON c.movie_id = m.id
-    ORDER BY m.title
+    ON c.regionai_id = r.id
+    ORDER BY r.region
     `;
     con.query(sql, (err, result) => {
         if (err) throw err;
@@ -192,14 +192,14 @@ app.get("/server/movies/wc", (req, res) => {
 
 
 //DELETE
-app.delete("/server/movies/:id", (req, res) => {
+app.delete("/server/regionai/:id", (req, res) => {
     const sql = `
-    DELETE FROM movies
+    DELETE FROM regionai
     WHERE id = ?
     `;
     con.query(sql, [req.params.id], (err, result) => {
         if (err) throw err;
-        res.send({ msg: 'OK', text: 'The movie was deleted.', type: 'info' });
+        res.send({ msg: 'OK', text: 'The regions and field was deleted.', type: 'info' });
     });
 });
 app.delete("/server/comments/:id", (req, res) => {
@@ -215,53 +215,53 @@ app.delete("/server/comments/:id", (req, res) => {
 
 
 //EDIT
-app.put("/home/movies/:id", (req, res) => {
-    const sql = `
-    UPDATE movies
-    SET 
-    rating_sum = rating_sum + ?, 
-    rating_count = rating_count + 1, 
-    rating = rating_sum / rating_count
-    WHERE id = ?
-    `;
-    con.query(sql, [req.body.rate, req.params.id], (err, result) => {
-        if (err) throw err;
-        res.send({ msg: 'OK', text: 'Thanks, for your vote.', type: 'info' });
-    });
-});
-app.put("/server/movies/:id", (req, res) => {
+// app.put("/home/regionai/:id", (req, res) => {
+//     const sql = `
+//     UPDATE regionai
+//     SET 
+//     rating_sum = rating_sum + ?, 
+//     rating_count = rating_count + 1, 
+//     rating = rating_sum / rating_count
+//     WHERE id = ?
+//     `;
+//     con.query(sql, [req.body.rate, req.params.id], (err, result) => {
+//         if (err) throw err;
+//         res.send({ msg: 'OK', text: 'Thanks, for your vote.', type: 'info' });
+//     });
+// });
+app.put("/server/regionai/:id", (req, res) => {
     let sql;
     let r;
     if (req.body.deletePhoto) {
         sql = `
-        UPDATE movies
-        SET title = ?, price = ?, image = null
+        UPDATE regionai
+        SET region = ?, field = ?, image = null
         WHERE id = ?
         `;
-        r = [req.body.title, req.body.price, req.params.id];
+        r = [req.body.region, req.body.field, req.params.id];
     } else if (req.body.image) {
         sql = `
-        UPDATE movies
-        SET title = ?, price = ?, image = ?
+        UPDATE regionai
+        SET region = ?, field = ?, image = ?
         WHERE id = ?
         `;
-        r = [req.body.title, req.body.price, req.body.image, req.params.id];
+        r = [req.body.region, req.body.field, req.body.image, req.params.id];
     } else {
         sql = `
-        UPDATE movies
-        SET title = ?, price = ?
+        UPDATE regionai
+        SET region = ?, field = ?
         WHERE id = ?
         `;
-        r = [req.body.title, req.body.price, req.params.id]
+        r = [req.body.region, req.body.field, req.params.id]
     }
     con.query(sql, r, (err, result) => {
         if (err) throw err;
-        res.send({ msg: 'OK', text: 'The movie was edited.', type: 'success' });
+        res.send({ msg: 'OK', text: 'The region and field was edited.', type: 'success' });
     });
 });
 
 app.listen(port, () => {
-    console.log(`Filmus rodo per ${port} portą!`)
+    console.log(`Administration portala rodo per ${port} portą!`)
 });
 
 
