@@ -7,12 +7,12 @@ function Edit() {
 
     const [title, setTitle] = useState('');
     const fileInput = useRef();
-    const [photoPrint, setPhotoPrint] = useState(null);
-    const [deletePhoto, setDeletePhoto] = useState(false);
+    const [photoPrint2, setPhotoPrint2] = useState(null);
+    const [deletePhoto2, setDeletePhoto2] = useState(false);
 
     const doPhoto = () => {
         getBase64(fileInput.current.files[0])
-            .then(photo => setPhotoPrint(photo))
+            .then(photo => setPhotoPrint2(photo))
             .catch(_ => {
                 // tylim
             })
@@ -24,11 +24,11 @@ function Edit() {
         setEditData({
             title,
             id: modalData.id,
-            deletePhoto: deletePhoto ? 1 : 0,
-            image: photoPrint
+            deletePhoto2: deletePhoto2 ? 1 : 0,
+            image2: photoPrint2
         });
         setModalData(null);
-        setDeletePhoto(false);
+        setDeletePhoto2(false);
     }
 
     useEffect(() => {
@@ -36,8 +36,8 @@ function Edit() {
             return;
         }
         setTitle(modalData.title);
-        setPhotoPrint(modalData.image);
-        setDeletePhoto(false);
+        setPhotoPrint2(modalData.image);
+        setDeletePhoto2(false);
     }, [modalData])
 
     if (null === modalData) {
@@ -64,10 +64,10 @@ function Edit() {
                                 <label className="form-label">Service image</label>
                                 <input ref={fileInput} type="file" className="form-control" onChange={doPhoto} />
                             </div>
-                            {photoPrint ? <div className='img-bin'>
+                            {photoPrint2 ? <div className='img-bin'>
                                 <label htmlFor="image-delete">X</label>
-                                <input id="image-delete" type="checkbox" checked={deletePhoto} onChange={() => setDeletePhoto(d => !d)}></input>
-                                <img src={photoPrint} alt="upload"></img>
+                                <input id="image-delete" type="checkbox" checked={deletePhoto2} onChange={() => setDeletePhoto2(d => !d)}></input>
+                                <img src={photoPrint2} alt="upload"></img>
                             </div> : null}
                             <button onClick={edit} type="button" className="btn btn-outline-success">Save</button>
                         </div>

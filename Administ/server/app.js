@@ -178,7 +178,7 @@ app.get("/server/regionai", (req, res) => {
 
 app.get("/server/field", (req, res) => {
     const sql = `
-    SELECT *
+    SELECT id, title, image2
     FROM field
     ORDER BY id DESC
     `;
@@ -286,14 +286,14 @@ app.put("/server/regionai/:id", (req, res) => {
         `;
         r = [req.body.region, req.body.image, req.params.id];
     }
-    // } else {
-    //     sql = `
-    //     UPDATE regionai
-    //     SET region = ?, 
-    //     WHERE id = ?
-    //     `;
-    //     r = [req.body.region, req.params.id]
-    // }
+     else {
+        sql = `
+        UPDATE regionai
+        SET region = ?, 
+        WHERE id = ?
+        `;
+        r = [req.body.region, req.params.id]
+    }
     con.query(sql, r, (err, result) => {
         if (err) throw err;
         res.send({ msg: 'OK', text: 'The region and field was edited.', type: 'success' });
@@ -302,30 +302,30 @@ app.put("/server/regionai/:id", (req, res) => {
 
 app.put("/server/field/:id", (req, res) => {
     let sql;
-    let r;
+    let d;
     if (req.body.deletePhoto) {
         sql = `
         UPDATE field
-        SET title = ?, image = null
+        SET title = ?, image2 = null
         WHERE id = ?
         `;
-        r = [req.body.title, req.params.id];
-    } else if (req.body.image) {
+        d = [req.body.title, req.params.id];
+    } else if (req.body.image2) {
         sql = `
         UPDATE field
-        SET title = ?, image = ?
+        SET title = ?, image2 = ?
         WHERE id = ?
         `;
-        r = [req.body.title, req.body.image, req.params.id];
+        d = [req.body.title, req.body.image2, req.params.id];
     } else {
         sql = `
         UPDATE field
-        SET title = ?, 
+        SET title = ? 
         WHERE id = ?
         `;
-        r = [req.body.title, req.params.id]
+        d = [req.body.title, req.params.id]
     }
-    con.query(sql, r, (err, result) => {
+    con.query(sql, d, (err, result) => {
         if (err) throw err;
         res.send({ msg: 'OK', text: 'The service was edited.', type: 'success' });
     });
