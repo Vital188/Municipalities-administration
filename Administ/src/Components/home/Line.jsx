@@ -3,25 +3,25 @@ import Home from '../../Contexts/Home';
 
 import { useState } from "react";
 
-function Line({ movie }) {
+function Line({ regions }) {
 
-    const { setRateData, setComment } = useContext(Home);
+    const {  setComment } = useContext(Home);
 
-    const [rate, setRate] = useState(5);
+    // const [rate, setRate] = useState(5);
     const [post, setPost] = useState('');
 
-    const doRating = () => {
-        setRateData({
-            id: movie[1][0].id,
-            rate
-        });
-        setRate(5);
-    }
+    // const doRating = () => {
+    //     setRateData({
+    //         id: regions[1][0].id,
+    //         rate
+    //     });
+    //     setRate(5);
+    // }
 
     const add = () => {
         setComment({
             post,
-            movie_id: movie[1][0].id
+            regions_id: regions[1][0].id
         });
         setPost('');
     }
@@ -32,33 +32,25 @@ function Line({ movie }) {
                 <div className="home__content">
 
                     <div className="home__content__info">
-                        <h2>{movie[0]}</h2>
-                        {movie[1][0].image ? <div className='img-bin'>
-                            <img src={movie[1][0].image} alt={movie[0]}>
+                        <h2>{regions[0]}</h2>
+                        {regions[1][0].image ? <div className='img-bin'>
+                            <img src={regions[1][0].image} alt={regions[0]}>
                             </img>
                         </div> : null}
                     </div>
 
                     <div className="home__content__price">
-                        {movie[1][0].price} Eur
+                        {regions[1][0].field} Eur
                     </div>
 
-                    <div className="home__content__info">
-                        <h2>{movie[1][0].rating ?? 'no rating'}</h2>
-                        <select value={rate} onChange={e => setRate(e.target.value)}>
-                            {
-                                [...Array(10)].map((_, i) => <option key={i + 1} value={i + 1}>{i + 1}</option>)
-                            }
-                        </select>
-                        <button onClick={doRating} type="button" className="btn btn-outline-success m-3">Rate</button>
-                    </div>
+                    
                 </div>
             </div>
             <div className="comments">
 
                 <ul className="list-group">
                     {
-                        movie[1]?.map(c => c.cid !== null ? <li key={c.cid} className="list-group-item"><p>{c.post}</p></li> : null)
+                        regions[1]?.map(c => c.cid !== null ? <li key={c.cid} className="list-group-item"><p>{c.post}</p></li> : null)
                     }
                 </ul>
 

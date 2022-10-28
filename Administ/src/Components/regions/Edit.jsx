@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState, useRef } from 'react';
-import Movies from '../../Contexts/Movies';
+import Regions from '../../Contexts/Regions';
 import getBase64 from '../../Functions/getBase64';
 
 function Edit() {
 
-    const [title, setTitle] = useState('');
-    const [price, setPrice] = useState('');
+    const [region, setRegion] = useState('');
+    const [field, setField] = useState('');
     const fileInput = useRef();
     const [photoPrint, setPhotoPrint] = useState(null);
     const [deletePhoto, setDeletePhoto] = useState(false);
@@ -18,12 +18,12 @@ function Edit() {
             })
     }
 
-    const { setEditData, modalData, setModalData } = useContext(Movies);
+    const { setEditData, modalData, setModalData } = useContext(Regions);
 
     const edit = () => {
         setEditData({
-            title,
-            price: parseFloat(price),
+            region,
+            field,
             id: modalData.id,
             deletePhoto: deletePhoto ? 1 : 0,
             image: photoPrint
@@ -36,8 +36,8 @@ function Edit() {
         if (null === modalData) {
             return;
         }
-        setTitle(modalData.title);
-        setPrice(modalData.price);
+        setRegion(modalData.region);
+        setField(modalData.field);
         setPhotoPrint(modalData.image);
         setDeletePhoto(false);
     }, [modalData])
@@ -52,22 +52,22 @@ function Edit() {
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title">Edit Movie</h5>
+                        <h5 className="modal-region">Edit regions and field</h5>
                         <button onClick={() => setModalData(null)} type="button" className="btn-close"></button>
                     </div>
                     <div className="modal-body"></div>
                     <div className="card m-4">
                         <div className="card-body">
                             <div className="mb-3">
-                                <label className="form-label">Movie Title</label>
-                                <input type="text" className="form-control" value={title} onChange={e => setTitle(e.target.value)} />
+                                <label className="form-label">Region</label>
+                                <input type="text" className="form-control" value={region} onChange={e => setRegion(e.target.value)} />
                             </div>
                             <div className="mb-3">
-                                <label className="form-label">Movie Price</label>
-                                <input type="text" className="form-control" value={price} onChange={e => setPrice(e.target.value)} />
+                                <label className="form-label">Field</label>
+                                <input type="text" className="form-control" value={field} onChange={e => setField(e.target.value)} />
                             </div>
                             <div className="mb-3">
-                                <label className="form-label">Movie Image</label>
+                                <label className="form-label">Regions Image</label>
                                 <input ref={fileInput} type="file" className="form-control" onChange={doPhoto} />
                             </div>
                             {photoPrint ? <div className='img-bin'>

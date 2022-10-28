@@ -166,7 +166,7 @@ app.get("/home/regionai", (req, res) => {
     const sql = `
     SELECT r.*, c.id AS cid, c.post
     FROM regionai AS r
-    LEFT JOIN comments AS c
+    LEFT JOIN cats AS c
     ON c.regionai_id = r.id
     ORDER BY r.region
     `;
@@ -179,7 +179,7 @@ app.get("/server/regionai/wc", (req, res) => {
     const sql = `
     SELECT r.*, c.id AS cid, c.post
     FROM regionai AS r
-    INNER JOIN comments AS c
+    INNER JOIN cats AS c
     ON c.regionai_id = r.id
     ORDER BY r.region
     `;

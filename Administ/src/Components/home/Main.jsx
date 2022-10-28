@@ -9,8 +9,8 @@ import DataContext from "../../Contexts/DataContext";
 function Main() {
 
         const [lastUpdate, setLastUpdate] = useState(Date.now());
-        const [movies, setMovies] = useState(null);
-        const [rateData, setRateData] = useState(null);
+        const [regionai, setRegionai] = useState(null);
+        // const [rateData, setRateData] = useState(null);
         const [comment, setComment] = useState(null);
         const { makeMsg } = useContext(DataContext);
 
@@ -29,9 +29,9 @@ function Main() {
 
         // READ for list
         useEffect(() => {
-            axios.get('http://localhost:3003/home/movies', authConfig())
+            axios.get('http://localhost:3003/home/regionai', authConfig())
                 .then(res => {
-                    setMovies(reList(res.data));
+                    setRegionai(reList(res.data));
                 })
         }, [lastUpdate]);
 
@@ -39,30 +39,29 @@ function Main() {
             if (null === comment) {
                 return;
             }
-            axios.post('http://localhost:3003/home/comments/' + comment.movie_id, comment, authConfig())
+            axios.post('http://localhost:3003/home/comments/' + comment.regionai_id, comment, authConfig())
             .then(res => {
                 setLastUpdate(Date.now());
                 makeMsg(res.data.text, res.data.type);
             })
          }, [comment, makeMsg]);
 
-        useEffect(() => {
-            if (null === rateData) {
-                return;
-            }
-            axios.put('http://localhost:3003/home/movies/' + rateData.id, rateData, authConfig())
-            .then(res => {
-                setLastUpdate(Date.now());
-                makeMsg(res.data.text, res.data.type);
-            });
-        }, [rateData, makeMsg]);
+        // useEffect(() => {
+        //     if (null === rateData) {
+        //         return;
+        //     }
+        //     axios.put('http://localhost:3003/home/regionai/' + rateData.id, rateData, authConfig())
+        //     .then(res => {
+        //         setLastUpdate(Date.now());
+        //         makeMsg(res.data.text, res.data.type);
+        //     });
+        // }, [rateData, makeMsg]);
 
       return (
         <Home.Provider value={{
             setComment,
-            movies,
-            setRateData,
-            setMovies,
+            regionai,
+            setRegionai,
         }}>
         <div className="container">
             <div className="row">

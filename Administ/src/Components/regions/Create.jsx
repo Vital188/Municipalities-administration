@@ -1,6 +1,6 @@
 import { useState, useContext, useRef } from 'react';
 import DataContext from '../../Contexts/DataContext';
-import Movies from '../../Contexts/Movies';
+import Regions from '../../Contexts/Regions';
 import getBase64 from '../../Functions/getBase64';
 
 function Create() {
@@ -9,7 +9,7 @@ function Create() {
     const [field, setField] = useState('');
     const fileInput = useRef();
 
-    const { setCreateData } = useContext(Movies);
+    const { setCreateData } = useContext(Regions);
     const {makeMsg} = useContext(DataContext);
 
     const [photoPrint, setPhotoPrint] = useState(null);
