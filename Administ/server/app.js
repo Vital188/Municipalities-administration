@@ -191,7 +191,7 @@ app.get("/server/field", (req, res) => {
 
 app.get("/home/regionai", (req, res) => {
     const sql = `
-    SELECT r.*, c.id AS cid, c.post
+    SELECT r.*, c.id AS cid, c.post 
     FROM regionai AS r
     LEFT JOIN comments AS c
     ON c.regionai_id = r.id
@@ -202,6 +202,21 @@ app.get("/home/regionai", (req, res) => {
         res.send(result);
     });
 });
+
+app.get("/home/field", (req, res) => {
+    const sql = `
+    SELECT id, title, image2
+    FROM field
+    ORDER BY id DESC
+    `;
+    con.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+
+
 app.get("/server/regionai/wc", (req, res) => {
     const sql = `
     SELECT r.*, c.id AS cid, c.post

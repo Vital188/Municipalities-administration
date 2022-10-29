@@ -10,7 +10,7 @@ function Main() {
 
         const [lastUpdate, setLastUpdate] = useState(Date.now());
         const [regionai, setRegionai] = useState(null);
-        // const [rateData, setRateData] = useState(null);
+        const [field, setField] = useState(null);
         const [comment, setComment] = useState(null);
         const { makeMsg } = useContext(DataContext);
 
@@ -35,6 +35,13 @@ function Main() {
                 })
         }, [lastUpdate]);
 
+        useEffect(() => {
+            axios.get('http://localhost:3003/home/field', authConfig())
+                .then(res => {
+                    setField((res.data));
+                })
+        }, [lastUpdate]);
+
          useEffect(() => {
             if (null === comment) {
                 return;
@@ -45,7 +52,7 @@ function Main() {
                 makeMsg(res.data.text, res.data.type);
             })
          }, [comment, makeMsg]);
-     console.log(comment)
+   
         // useEffect(() => {
         //     if (null === rateData) {
         //         return;
@@ -62,6 +69,8 @@ function Main() {
             setComment,
             regionai,
             setRegionai,
+            field,
+            setField
         }}>
         <div className="container">
             <div className="row">

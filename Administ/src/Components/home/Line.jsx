@@ -7,17 +7,9 @@ function Line({ regions }) {
 
     const {  setComment } = useContext(Home);
 
-    // const [rate, setRate] = useState(5);
     const [post, setPost] = useState('');
 
-    // const doRating = () => {
-    //     setRateData({
-    //         id: regions[1][0].id,
-    //         rate
-    //     });
-    //     setRate(5);
-    // }
-
+  
     const add = () => {
         setComment({
             post,
@@ -25,22 +17,23 @@ function Line({ regions }) {
         });
         setPost('');
     }
-
+console.log(regions)
     return (
         <li className="list-group-item">
             <div className="home">
                 <div className="home__content">
 
                     <div className="home__content__info">
-                        <h2>{regions[0]}</h2>
+                        
                         {regions[1][0].image ? <div className='img-bin'>
                             <img src={regions[1][0].image} alt={regions[0]}>
                             </img>
                         </div> : null}
+                        <h2>{regions[0]}</h2>
                     </div>
 
                     <div className="home__content__price">
-                        {regions[1][0].field} Eur
+                        {regions[1][0].field} 
                     </div>
 
                     
