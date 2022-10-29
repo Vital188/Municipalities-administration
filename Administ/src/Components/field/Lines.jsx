@@ -8,7 +8,9 @@ function Lines({ field }) {
         <>
         <li className="list-group-item">
             <div className="line">
-                <div className="line__content">
+                <div className="line__content" style={{
+                    alignItems: 'center'
+                }}>
                     <div className="line__content__info">
                         {field.image2 ? <div className='img-bin'>
                             <img src={field.image2} alt={field.title}>
