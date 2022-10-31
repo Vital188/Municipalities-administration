@@ -3,7 +3,7 @@ import Home from '../../Contexts/Home';
 
 import { useState } from "react";
 
-function Line({ regions }) {
+function Line({ regions, fil }) {
 
     const {  setComment } = useContext(Home);
 
@@ -17,28 +17,38 @@ function Line({ regions }) {
         });
         setPost('');
     }
-console.log(regions)
+console.log(fil)
     return (
-        <li className="list-group-item">
-            <div className="home">
+       
                 <div className="home__content">
 
                     <div className="home__content__info">
                         
-                        {regions[1][0].image ? <div className='img-bin'>
+                         {regions[1][0].image ? <div className='img-bin'>
                             <img src={regions[1][0].image} alt={regions[0]}>
                             </img>
-                        </div> : null}
+                        </div> : null} 
                         <h2>{regions[0]}</h2>
                     </div>
 
-                    <div className="home__content__price">
+                    {/* <div className="home__content__price">
                         {regions[1][0].field} 
-                    </div>
-
+                    </div> */}
+                    {/* <div className="home__content__info">
+                      </div>
+   */}
+                         {/* {field.image2 ? <div className='img-bin'>
+                            <img src={field.image2} alt={field}>
+                            </img>
+                        </div> : null}  */}
+                        {/* <h2>{fil.title}</h2> */}
                     
-                </div>
-            </div>
+                    {/* <div className="home__content__price">
+                        {fil.title} 
+                    </div> */}
+                    
+                
+          
             <div className="comments">
 
                 <ul className="list-group">
@@ -47,13 +57,18 @@ console.log(regions)
                     }
                 </ul>
 
-                <div className="mb-3">
+                <div className="mb-3" style={{
+                    marginTop: '40px',
+                    marginBottom: '20px'
+                }}>
                     <label className="form-label">Add comment</label>
-                    <textarea className="form-control" value={post} onChange={e => setPost(e.target.value)}></textarea>
+                    <textarea style={{
+                        width: '770px'
+                    }} className="form-control" value={post} onChange={e => setPost(e.target.value)}></textarea>
                 </div>
                 <button onClick={add} type="button" className="btn btn-outline-success">Add</button>
             </div>
-        </li>
+        </div>
     )
 }
 

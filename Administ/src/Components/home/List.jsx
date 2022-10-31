@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useContext } from 'react';
 import Home from "../../Contexts/Home";
 import Line from './Line';
+import Lines from './Lines';
 
 const sortData = [
     { v: 'default', t: 'Default' },
@@ -23,6 +24,7 @@ function List() {
     const [type, setType] = useState("0");
     const [serFiltered, setSerFiltered] = useState([]);
     const [serv, setServ] = useState("0");
+    
 
 
     useEffect(() => {
@@ -67,16 +69,16 @@ function List() {
 
       useEffect(() => {
         if (field !== null) {
-          setRegFiltered([...field]?.filter((el) => el.title === serv));
+          setSerFiltered([...field]?.filter((el) => el.title === serv));
         }
       }, [field,  serv]);
     
 
-    
+      console.log(regionai, field)   
     return (
         <>
             <div className="card m-4">
-        <h5 className="card-header">Sort</h5>
+        <h5 className="card-header">Sort municipalities and services from List</h5>
         <div className="card-body">
             <div className="mb-3">
             <label className="form-label">Sort by municipalities:</label>
@@ -118,14 +120,29 @@ function List() {
           </div>
             <div className="card m-4">
                 <h5 className="card-header">Lithuanian municipalities <b>({stats.regionsCount})</b> and services <b>({st.fieldCount})</b> list: </h5>
-                <div className="card-body">
+                <div className="card-body" style={{
+                  display: 'flex',
+                  flexDirection: 'row-reverse'
+                }}>
                 <ul className="list-group">
+                
+            <div className="home">
+            {
+               serFiltered?.map((f) => <Lines key={f.id} fil={f} />)
+            }
+            </div>
+            </ul>
+          <ul className="list-group" style={{
+            width: '500px'
+          }}>
             {
                regFiltered?.map((r) => <Line key={r.id} regions={r} />)
             }
           </ul>
-                </div>
-            </div>
+         
+          </div>
+          </div>
+       
         </>
     );
 }
