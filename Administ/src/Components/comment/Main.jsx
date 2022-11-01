@@ -9,26 +9,27 @@ function Main() {
 
     const [lastUpdate, setLastUpdate] = useState(Date.now());
     const [regions, setRegions] = useState(null);
+    const [field, setField] = useState(null);
     const [comment, setComment] = useState(null);
     const { makeMsg } = useContext(DataContext);
 
     const reList = data => {
         const d = new Map();
         data.forEach(line => {
-            if (d.has(line.title)) {
-                d.set(line.title, [...d.get(line.title), line]);
+            if (d.has(line.region)) {
+                d.set(line.region, [...d.get(line.region), line]);
             } else {
-                d.set(line.title, [line]);
+                d.set(line.region, [line]);
             }
         });
         return [...d];
     }
-
+console.log(regions)
     // READ for list
     useEffect(() => {
-        axios.get('http://localhost:3003/server/regionai/wc', authConfig())
+        axios.get('http://localhost:3003/home/regionai/wc', authConfig())
             .then(res => {
-                setRegions(reList(res.data));
+                setRegions((res.data));
             })
     }, [lastUpdate]);
 
@@ -46,7 +47,8 @@ function Main() {
     return (
         <Comment.Provider value={{
             setComment,
-            regions
+            regions,
+            field
         }}>
             <div className="container">
                 <div className="row">

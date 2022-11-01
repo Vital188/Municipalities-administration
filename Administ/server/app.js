@@ -154,10 +154,10 @@ app.post("/server/regionai", (req, res) => {
 
 app.post("/home/comments/:id", (req, res) => {
     const sql = `
-    INSERT INTO comments (post, regionai_id)
-    VALUES (?, ?)
+    INSERT INTO comments (post, regionai_id, field_id)
+    VALUES (?, ?, ?)
     `;
-    con.query(sql, [req.body.post, req.params.id], (err, result) => {
+    con.query(sql, [req.body.post, req.params.id, req.body.field_id], (err, result) => {
         if (err) throw err;
         res.send({ msg: 'OK', text: 'Thanks, for commenting.', type: 'info' });
     });
@@ -217,12 +217,15 @@ app.get("/home/field", (req, res) => {
 
 
 
-app.get("/server/regionai/wc", (req, res) => {
+app.get("/home/regionai/wc", (req, res) => {
     const sql = `
-    SELECT r.*, c.id AS cid, c.post
+    SELECT r.*, f.*, c.id AS cid, c.post
     FROM regionai AS r
     INNER JOIN comments AS c
     ON c.regionai_id = r.id
+    FROM field AS f
+    INNER JOIN comments AS c
+    ON c.field_id = f.id
     ORDER BY r.region
     `;
     con.query(sql, (err, result) => {

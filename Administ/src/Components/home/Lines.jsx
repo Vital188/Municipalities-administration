@@ -5,11 +5,17 @@ import { useState } from "react";
 
 function Lines({ fil }) {
 
-    const {  setComment } = useContext(Home);
+    // const {  setComment } = useContext(Home);
 
-    const [post, setPost] = useState('');
+    // const [post, setPost] = useState('');
 
-  
+    // const add = () => {
+    //     setComment({
+    //         post,
+    //         regionai_id: regions[1][0].id
+    //     });
+    //     setPost('');
+    // }
     // const add = () => {
     //     setComment({
     //         post,

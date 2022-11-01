@@ -43,7 +43,7 @@ function Main() {
                 makeMsg(res.data.text, res.data.type);
             });
     }, [createData, makeMsg]);
-console.log(field)
+
     useEffect(() => {
         if (null === deleteData) {
             return;

@@ -3,33 +3,47 @@ import Home from '../../Contexts/Home';
 
 import { useState } from "react";
 
-function Line({ regions, fil }) {
+function Line({ regions, fil, serFiltered}) {
 
-    const {  setComment } = useContext(Home);
-
+    const {  comment, setComment, } = useContext(Home);
+    const [type, setType] = useState("0");
     const [post, setPost] = useState('');
 
   
     const add = () => {
         setComment({
             post,
-            regionai_id: regions[1][0].id
+            regionai_id: regions.id,
+            field_id: typ
         });
         setPost('');
     }
-console.log(fil)
+
+ const typ = Number(serFiltered?.map((el) => el.id ))
+                
+//    const data = regions ? regions : fil
+console.log(serFiltered, comment, typ)
     return (
        
                 <div className="home__content">
 
                     <div className="home__content__info">
                         
-                         {regions[1][0].image ? <div className='img-bin'>
-                            <img src={regions[1][0].image} alt={regions[0]}>
+                         {regions.image ? <div className='img-bin'>
+                            <img src={regions.image} alt={regions.region}>
                             </img>
                         </div> : null} 
-                        <h2>{regions[0]}</h2>
+                        <h2>{regions.region}</h2>
                     </div>
+                
+
+                     {/* <div className="home__content__info">
+                         {data.image2 ? <div className='img-bin'>
+                            <img src={data.image2} alt={data}>
+                            </img>
+                        </div> : null} 
+                         <h2>{data.title}</h2> 
+                     </div>   */}
 
                     {/* <div className="home__content__price">
                         {regions[1][0].field} 
@@ -47,14 +61,14 @@ console.log(fil)
                         {fil.title} 
                     </div> */}
                     
-                
+               
           
             <div className="comments">
 
                 <ul className="list-group">
-                    {
-                        regions[1]?.map(c => c.cid !== null ? <li key={c.cid} className="list-group-item"><p>{c.post}</p></li> : null)
-                    }
+                     {
+                        regions[0]?.map(c => c.cid !== null ? <li key={c.cid} className="list-group-item"><p>{c.post}</p></li> : null)
+                    } 
                 </ul>
 
                 <div className="mb-3" style={{

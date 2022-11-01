@@ -31,7 +31,7 @@ function Main() {
         useEffect(() => {
             axios.get('http://localhost:3003/home/regionai', authConfig())
                 .then(res => {
-                    setRegionai(reList(res.data));
+                    setRegionai((res.data));
                 })
         }, [lastUpdate]);
 
@@ -53,16 +53,7 @@ function Main() {
             })
          }, [comment, makeMsg]);
    
-        // useEffect(() => {
-        //     if (null === rateData) {
-        //         return;
-        //     }
-        //     axios.put('http://localhost:3003/home/regionai/' + rateData.id, rateData, authConfig())
-        //     .then(res => {
-        //         setLastUpdate(Date.now());
-        //         makeMsg(res.data.text, res.data.type);
-        //     });
-        // }, [rateData, makeMsg]);
+ console.log(lastUpdate, comment)      
 
       return (
         <Home.Provider value={{
@@ -70,7 +61,8 @@ function Main() {
             regionai,
             setRegionai,
             field,
-            setField
+            setField,
+            comment
         }}>
         <div className="container">
             <div className="row">

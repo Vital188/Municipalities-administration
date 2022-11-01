@@ -5,13 +5,13 @@ import Home from "../../Contexts/Home";
 import Line from './Line';
 import Lines from './Lines';
 
-const sortData = [
-    { v: 'default', t: 'Default' },
-    { v: 'price_asc', t: 'Price 1-9' },
-    { v: 'price_desc', t: 'Price 9-1' },
-    { v: 'rate_asc', t: 'Rating 1-9' },
-    { v: 'rate_desc', t: 'Rating 9-1' }
-];
+// const sortData = [
+//     { v: 'default', t: 'Default' },
+//     { v: 'price_asc', t: 'Price 1-9' },
+//     { v: 'price_desc', t: 'Price 9-1' },
+//     { v: 'rate_asc', t: 'Rating 1-9' },
+//     { v: 'rate_desc', t: 'Rating 9-1' }
+// ];
 
 function List() {
 
@@ -63,7 +63,7 @@ function List() {
 
     useEffect(() => {
         if (regionai !== null) {
-          setRegFiltered([...regionai]?.filter((el) => el[1][0].region === type));
+          setRegFiltered([...regionai]?.filter((el) => el.region === type));
         }
       }, [regionai, type]);
 
@@ -73,8 +73,6 @@ function List() {
         }
       }, [field,  serv]);
     
-
-      console.log(regionai, field)   
     return (
         <>
             <div className="card m-4">
@@ -92,8 +90,8 @@ function List() {
                 Choose municipality from list:
               </option>
               {regionai?.map((r) => (
-                <option key={r[1][0].id} value={r[1][0].region}>
-                  {r[1][0].region}
+                <option key={r.id} value={r.region}>
+                  {r.region}
                 </option>
               ))}
             </select>
@@ -121,24 +119,32 @@ function List() {
             <div className="card m-4">
                 <h5 className="card-header">Lithuanian municipalities <b>({stats.regionsCount})</b> and services <b>({st.fieldCount})</b> list: </h5>
                 <div className="card-body" style={{
-                  display: 'flex',
-                  flexDirection: 'row-reverse'
+                  display: 'flex'
                 }}>
-                <ul className="list-group">
-                
-            <div className="home">
-            {
-               serFiltered?.map((f) => <Lines key={f.id} fil={f} />)
-            }
-            </div>
-            </ul>
+             
           <ul className="list-group" style={{
             width: '500px'
           }}>
             {
-               regFiltered?.map((r) => <Line key={r.id} regions={r} />)
+               regFiltered?.map((r) => <Line key={r.id} regions={r} serFiltered={serFiltered} cid={r.cid} />)
             }
           </ul>
+          <ul className="list-group">
+                
+                <div className="home">
+                {
+                   serFiltered?.map((f) => <div key={f.id}  fil={f} className="home__content__info">
+                   {f.image2 ? <div className='img-bin'>
+                      <img src={f.image2} alt={f}>
+                      </img>
+                  </div> : null} 
+                   <h2>{f.title}</h2> 
+                   {/* <Line fil={f} /> */}
+              </div>
+               )
+                }
+                </div>
+                </ul>
          
           </div>
           </div>

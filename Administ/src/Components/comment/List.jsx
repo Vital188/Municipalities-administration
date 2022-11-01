@@ -18,11 +18,11 @@ function List() {
 
     return (
         <div className="card m-4">
-            <h5 className="card-header">regions List ({stats.regionCount})</h5>
+            <h5 className="card-header">Comments list ({stats.regionCount})</h5>
             <div className="card-body">
                 <ul className="list-group">
                     {
-                        regions?.map(r => <Line key={r[1][0].id} region={r} />)
+                        regions?.map(r => <Line key={r.id} region={r} />)
                     }
                 </ul>
             </div>
