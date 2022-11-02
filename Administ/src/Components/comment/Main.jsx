@@ -27,18 +27,18 @@ function Main() {
 
     // READ for list
     useEffect(() => {
-        axios.get('http://localhost:3003/home/regionai/wc', authConfig())
+        axios.get('http://localhost:3003/home/comments/wc', authConfig())
             .then(res => {
                 setRegions(reList(res.data));
             })
     }, [lastUpdate]);
 
-    useEffect(() => {
-        axios.get('http://localhost:3003/home/field/wc', authConfig())
-            .then(res => {
-                setField((res.data));
-            })
-    }, [lastUpdate]);
+    // useEffect(() => {
+    //     axios.get('http://localhost:3003/home/field/wc', authConfig())
+    //         .then(res => {
+    //             setField((res.data));
+    //         })
+    // }, [lastUpdate]);
 
     useEffect(() => {
         if (null === comment) {

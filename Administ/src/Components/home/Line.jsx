@@ -14,12 +14,18 @@ function Line({ regions, fil, serFiltered}) {
         setComment({
             post,
             regionai_id: regions.id,
-            field_id: typ
+            field_id: typ,
+            image: regions.image,
+            region: regions.region,
+            image2: img,
+            title: tit
         });
         setPost('');
     }
 
- const typ = Number(serFiltered?.map((el) => el.id ))
+ const typ = Number(serFiltered?.map((el) => el.id ));
+ const img = String(serFiltered?.map((el) => el.image2));
+ const tit = String(serFiltered?.map((el) => el.title))
                 
 //    const data = regions ? regions : fil
 console.log(serFiltered, comment, typ)

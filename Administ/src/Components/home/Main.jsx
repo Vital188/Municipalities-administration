@@ -53,7 +53,7 @@ function Main() {
             })
          }, [comment, makeMsg]);
    
- console.log(lastUpdate, comment)      
+ console.log(comment)      
 
       return (
         <Home.Provider value={{
