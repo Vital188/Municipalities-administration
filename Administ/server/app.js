@@ -233,14 +233,10 @@ app.get("/home/regionai/wc", (req, res) => {
 
 app.get("/home/comments/wc", (req, res) => {
     const sql = `
-    SELECT c.*, r.id AS rid, f.id AS fid
+    SELECT c.*, r.id AS rid
     FROM comments AS c
     INNER JOIN regionai AS r
-    ON r.comments_id = c.id
-    ORDER BY c.post
-    FROM comments AS c
-    INNER JOIN field AS f
-    ON f.comments_id = c.id
+    ON c.regionai_id = r.id
     ORDER BY c.post
     `;
     con.query(sql, (err, result) => {
@@ -248,6 +244,12 @@ app.get("/home/comments/wc", (req, res) => {
         res.send(result);
     });
 });
+// FROM comments AS c
+//     INNER JOIN field AS f
+//     ON c.field_id = fid
+//     ORDER BY c.post
+
+
 
 //DELETE
 app.delete("/server/regionai/:id", (req, res) => {

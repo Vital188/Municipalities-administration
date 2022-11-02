@@ -16,10 +16,10 @@ function Main() {
     const reList = data => {
         const d = new Map();
         data.forEach(line => {
-            if (d.has(line.region)) {
-                d.set(line.region, [...d.get(line.region), line]);
+            if (d.has(line.rid)) {
+                d.set(line.rid, [...d.get(line.rid), line]);
             } else {
-                d.set(line.region, [line]);
+                d.set(line.rid, [line]);
             }
         });
         return [...d];
@@ -54,8 +54,7 @@ function Main() {
     return (
         <Comment.Provider value={{
             setComment,
-            regions,
-            field
+            regions
         }}>
             <div className="container">
                 <div className="row">

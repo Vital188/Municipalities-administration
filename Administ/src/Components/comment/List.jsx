@@ -15,7 +15,7 @@ function List() {
         }
         setStats(s => ({ ...s, regionCount: regions.length }));
     }, [regions]);
-console.log(regions)
+
     return (
         <div className="card m-4">
             <h5 className="card-header">Comments list ({stats.regionCount})</h5>
