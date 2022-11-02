@@ -219,13 +219,10 @@ app.get("/home/field", (req, res) => {
 
 app.get("/home/regionai/wc", (req, res) => {
     const sql = `
-    SELECT r.*, f.*, c.id AS cid, c.post
+    SELECT r.*, c.id AS cid, c.post
     FROM regionai AS r
     INNER JOIN comments AS c
     ON c.regionai_id = r.id
-    FROM field AS f
-    INNER JOIN comments AS c
-    ON c.field_id = f.id
     ORDER BY r.region
     `;
     con.query(sql, (err, result) => {
@@ -234,7 +231,19 @@ app.get("/home/regionai/wc", (req, res) => {
     });
 });
 
-
+app.get("/home/field/wc", (req, res) => {
+    const sql = `
+    SELECT f.*, c.id AS cid
+    FROM field AS f
+    INNER JOIN comments AS c
+    ON c.field_id = f.id
+    ORDER BY f.title
+    `;
+    con.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
 
 //DELETE
 app.delete("/server/regionai/:id", (req, res) => {
@@ -320,30 +329,30 @@ app.put("/server/regionai/:id", (req, res) => {
 
 app.put("/server/field/:id", (req, res) => {
     let sql;
-    let d;
+    let f;
     if (req.body.deletePhoto) {
         sql = `
         UPDATE field
         SET title = ?, image2 = null
         WHERE id = ?
         `;
-        d = [req.body.title, req.params.id];
+        f = [req.body.title, req.params.id];
     } else if (req.body.image2) {
         sql = `
         UPDATE field
         SET title = ?, image2 = ?
         WHERE id = ?
         `;
-        d = [req.body.title, req.body.image2, req.params.id];
+        f = [req.body.title, req.body.image2, req.params.id];
     } else {
         sql = `
         UPDATE field
         SET title = ? 
         WHERE id = ?
         `;
-        d = [req.body.title, req.params.id]
+        f = [req.body.title, req.params.id]
     }
-    con.query(sql, d, (err, result) => {
+    con.query(sql, f, (err, result) => {
         if (err) throw err;
         res.send({ msg: 'OK', text: 'The service was edited.', type: 'success' });
     });

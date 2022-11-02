@@ -24,12 +24,19 @@ function Main() {
         });
         return [...d];
     }
-console.log(regions)
+
     // READ for list
     useEffect(() => {
         axios.get('http://localhost:3003/home/regionai/wc', authConfig())
             .then(res => {
-                setRegions((res.data));
+                setRegions(reList(res.data));
+            })
+    }, [lastUpdate]);
+
+    useEffect(() => {
+        axios.get('http://localhost:3003/home/field/wc', authConfig())
+            .then(res => {
+                setField((res.data));
             })
     }, [lastUpdate]);
 
