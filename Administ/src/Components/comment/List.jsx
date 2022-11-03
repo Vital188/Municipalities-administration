@@ -8,7 +8,7 @@ function List() {
     const { regions } = useContext(Comment);
     const [stats, setStats] = useState({ regionCount: null });
 
-
+    
     useEffect(() => {
         if (null === regions) {
             return;

@@ -6,7 +6,7 @@ function Line({ region }) {
 
     const { setComment } = useContext(Comment);
     const [color, setColor] = useState('white');
-    const [tit, setTit] = useState('Confirmation')
+    const [tit, setTit] = useState('Waiting confirmation')
     
    const add = () => {
     setColor('orange');

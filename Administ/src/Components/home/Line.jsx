@@ -6,7 +6,7 @@ import { useState } from "react";
 function Line({ sr, regions, fil, serFiltered}) {
 
     const {  comment, setComment, } = useContext(Home);
-    const [type, setType] = useState("0");
+
     const [post, setPost] = useState('');
 
   
@@ -28,7 +28,7 @@ function Line({ sr, regions, fil, serFiltered}) {
  const img = String(serFiltered?.map((el) => el.image2));
  const tit = String(serFiltered?.map((el) => el.title))
                 
-//    const data = regions ? regions : fil
+
 console.log(serFiltered, comment, typ)
     return (
        
@@ -41,34 +41,7 @@ console.log(serFiltered, comment, typ)
                             </img>
                         </div> : null} 
                         <h2>{regions.region}</h2>
-                    </div>
-                
-
-                     {/* <div className="home__content__info">
-                         {data.image2 ? <div className='img-bin'>
-                            <img src={data.image2} alt={data}>
-                            </img>
-                        </div> : null} 
-                         <h2>{data.title}</h2> 
-                     </div>   */}
-
-                    {/* <div className="home__content__price">
-                        {regions[1][0].field} 
-                    </div> */}
-                    {/* <div className="home__content__info">
-                      </div>
-   */}
-                         {/* {field.image2 ? <div className='img-bin'>
-                            <img src={field.image2} alt={field}>
-                            </img>
-                        </div> : null}  */}
-                        {/* <h2>{fil.title}</h2> */}
-                    
-                    {/* <div className="home__content__price">
-                        {fil.title} 
-                    </div> */}
-                    
-               
+                    </div>            
           
             <div className="comments">
 

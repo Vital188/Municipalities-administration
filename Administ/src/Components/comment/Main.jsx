@@ -9,7 +9,7 @@ function Main() {
 
     const [lastUpdate, setLastUpdate] = useState(Date.now());
     const [regions, setRegions] = useState(null);
-    const [field, setField] = useState(null);
+
     const [comment, setComment] = useState(null);
     const { makeMsg } = useContext(DataContext);
 

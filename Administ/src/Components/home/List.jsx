@@ -3,21 +3,13 @@ import { useEffect } from 'react';
 import { useContext } from 'react';
 import Home from "../../Contexts/Home";
 import Line from './Line';
-import Lines from './Lines';
 
-// const sortData = [
-//     { v: 'default', t: 'Default' },
-//     { v: 'price_asc', t: 'Price 1-9' },
-//     { v: 'price_desc', t: 'Price 9-1' },
-//     { v: 'rate_asc', t: 'Rating 1-9' },
-//     { v: 'rate_desc', t: 'Rating 9-1' }
-// ];
 
 function List() {
 
     const { regionai, field, setRegions} = useContext(Home);
 
-    // const [sortBy, setSortBy] = useState('default');
+
     const [stats, setStats] = useState({regionsCount: null});
     const [st, setSt] = useState({fieldCount: null});
     const [regFiltered, setRegFiltered] = useState([]);
@@ -41,25 +33,7 @@ function List() {
         setSt(s => ({...s, fieldCount: field.length}));
     }, [field]);
 
-    // useEffect(() => {
-    //     switch (sortBy) {
-    //         case 'price_asc':
-    //             setRegionai(m => [...m].sort((a, b) => a[1][0].price - b[1][0].price));
-    //             break;
-    //         case 'price_desc':
-    //             setRegionai(m => [...m].sort((b, a) => a[1][0].price - b[1][0].price));
-    //             break;
-    //         case 'rate_asc':
-    //             setRegionai(m => [...m].sort((x, c) => x[1][0].rating - c[1][0].rating));
-    //             break;
-    //         case 'rate_desc':
-    //             setRegionai(m => [...m].sort((jo, no) => no[1][0].rating - jo[1][0].rating));
-    //             break;
-    //         default:
-    //             setRegionai(m => [...m ?? []].sort((a, b) => a[1][0].row - b[1][0].row));
-    //     }
-
-    // }, [sortBy, setRegionai]);
+   
 
     useEffect(() => {
         if (regionai !== null) {
@@ -121,13 +95,7 @@ function List() {
                 <div className="card-body" style={{
                   display: 'flex'
                 }}>
-          {/* <div className="home__content__info" style={{
-            width: '500px'
-          }}>
-            {
-               regFiltered?.map((r) => <Line key={r.id} regions={r} sr={setRegions} serFiltered={serFiltered} cid={r.cid} />)
-            }
-          </div>    */}
+          
           <ul className="list-group" style={{
             width: '500px'
           }}>
@@ -145,7 +113,7 @@ function List() {
                       </img>
                   </div> : null} 
                    <h2>{f.title}</h2> 
-                   {/* <Line fil={f} /> */}
+               
               </div>
                )
                 }
