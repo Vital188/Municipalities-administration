@@ -15,7 +15,7 @@ import Lines from './Lines';
 
 function List() {
 
-    const { regionai, setRegionai, field, setField} = useContext(Home);
+    const { regionai, field, setRegions} = useContext(Home);
 
     // const [sortBy, setSortBy] = useState('default');
     const [stats, setStats] = useState({regionsCount: null});
@@ -63,7 +63,7 @@ function List() {
 
     useEffect(() => {
         if (regionai !== null) {
-          setRegFiltered([...regionai]?.filter((el) => el.region === type));
+          setRegFiltered(regionai?.filter((el) => el.region === type));
         }
       }, [regionai, type]);
 
@@ -121,12 +121,18 @@ function List() {
                 <div className="card-body" style={{
                   display: 'flex'
                 }}>
-             
+          {/* <div className="home__content__info" style={{
+            width: '500px'
+          }}>
+            {
+               regFiltered?.map((r) => <Line key={r.id} regions={r} sr={setRegions} serFiltered={serFiltered} cid={r.cid} />)
+            }
+          </div>    */}
           <ul className="list-group" style={{
             width: '500px'
           }}>
             {
-               regFiltered?.map((r) => <Line key={r.id} regions={r} serFiltered={serFiltered} cid={r.cid} />)
+               regFiltered?.map((r) => <Line key={r.id} regions={r} sr={setRegions} serFiltered={serFiltered} cid={r.cid} />)
             }
           </ul>
           <ul className="list-group">

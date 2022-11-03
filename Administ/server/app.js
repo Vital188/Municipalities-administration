@@ -233,10 +233,12 @@ app.get("/home/regionai/wc", (req, res) => {
 
 app.get("/home/comments/wc", (req, res) => {
     const sql = `
-    SELECT c.*, r.id AS rid
+    SELECT c.*, r.id AS rid, f.id AS fid, f.title, f.image2 
     FROM comments AS c
     INNER JOIN regionai AS r
     ON c.regionai_id = r.id
+    INNER JOIN field AS f
+    ON c.field_id = f.id
     ORDER BY c.post
     `;
     con.query(sql, (err, result) => {

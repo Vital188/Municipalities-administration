@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate, useNavigate } from 'react-route
 import Nav from './Components/Nav';
 import Home from './Components/home/Main';
 import MainComment from './Components/comment/Main';
+import MainCom from './Components/com/Main'
 import MainRegions from './Components/regions/Main';
 import MainField from './Components/field/Main';
 import RegisterPage from './Components/register/Main';
@@ -57,6 +58,7 @@ function App() {
           <Route path="/logout" element={<LogoutPage setRoleChange={setRoleChange} />} />
           <Route path="/regions" element={<RequireAuth role="admin"><MainRegions /></RequireAuth>}></Route>
           <Route path="/field" element={<RequireAuth role="admin"><MainField /></RequireAuth>}></Route>
+          <Route path="/com" element={<RequireAuth role="user"><MainCom /></RequireAuth>}></Route>
           <Route path="/comments" element={<RequireAuth role="admin"><MainComment /></RequireAuth>}></Route>
           <Route path="/register" element={<RegisterPage setRoleChange={setRoleChange} />} />
         </Routes>

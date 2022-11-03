@@ -9,7 +9,9 @@ function Line({ regionai }) {
         <>
         <li className="list-group-item">
             <div className="line">
-                <div className="line__content">
+                <div className="line__content" style={{
+                    alignItems: 'center'
+                }}>
                     <div className="line__content__info">
                         {regionai.image ? <div className='img-bin'>
                             <img src={regionai.image} alt={regionai.region}>

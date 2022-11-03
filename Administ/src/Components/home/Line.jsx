@@ -3,7 +3,7 @@ import Home from '../../Contexts/Home';
 
 import { useState } from "react";
 
-function Line({ regions, fil, serFiltered}) {
+function Line({ sr, regions, fil, serFiltered}) {
 
     const {  comment, setComment, } = useContext(Home);
     const [type, setType] = useState("0");
@@ -21,6 +21,7 @@ function Line({ regions, fil, serFiltered}) {
             title: tit
         });
         setPost('');
+        sr(null)
     }
 
  const typ = Number(serFiltered?.map((el) => el.id ));
@@ -83,7 +84,7 @@ console.log(serFiltered, comment, typ)
                 }}>
                     <label className="form-label">Add comment</label>
                     <textarea style={{
-                        width: '770px'
+                        width: '400px'
                     }} className="form-control" value={post} onChange={e => setPost(e.target.value)}></textarea>
                 </div>
                 <button onClick={add} type="button" className="btn btn-outline-success">Add</button>

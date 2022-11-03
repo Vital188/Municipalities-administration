@@ -58,9 +58,7 @@ console.log(region)
                                     backgroundColor: color
                                 }} type="button" className="btn btn-outline-danger">{tit}</button>
                             
-                            <div className="home__buttons">
-                                <button onClick={() => remove(c.id)} type="button" className="btn btn-outline-danger">Delete</button>
-                            </div></div>
+                            </div>
                         </li> : null)
                     }
                 </ul> 
