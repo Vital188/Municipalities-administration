@@ -9,7 +9,6 @@ function Main() {
 
     const [lastUpdate, setLastUpdate] = useState(Date.now());
     const [regions, setRegions] = useState(null);
-    const [field, setField] = useState(null);
     const [comment, setComment] = useState(null);
     const { makeMsg } = useContext(DataContext);
 
@@ -33,13 +32,7 @@ function Main() {
             })
     }, [lastUpdate]);
 
-    // useEffect(() => {
-    //     axios.get('http://localhost:3003/home/field/wc', authConfig())
-    //         .then(res => {
-    //             setField((res.data));
-    //         })
-    // }, [lastUpdate]);
-
+   
     useEffect(() => {
         if (null === comment) {
             return;

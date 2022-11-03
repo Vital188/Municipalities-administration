@@ -73,7 +73,7 @@ function Line({  regions,  serFiltered, stop }) {
         <button onClick={add} type="button" className="btn btn-outline-success">
           Add
         </button></div>): 
-        (<button onClick={stop}>Thank you for comment. Yours comment will be verified. Please, choose another municipality and services!</button>)
+        (<button onClick={stop}>Thank you for comment. Yours comment will be verified. Please, push this button and choose another municipality and services!</button>)
         }
         
       </div>  

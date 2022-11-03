@@ -4,11 +4,11 @@ import { useState } from 'react';
 function Line({ region }) {
 
 
-    const [color, setColor] = useState('white');
+    const [color, setColor] = useState('skyblue');
     const [tit, setTit] = useState('Waiting confirmation')
 
 
-
+console.log(region) 
     return (
         <li className="list-group-item">
             <div className="home">
@@ -24,7 +24,7 @@ function Line({ region }) {
                         </div> : null}
                     </div>
                     
-                    
+                   
                 </div>
             </div>
             <div className="comments">
@@ -46,10 +46,14 @@ function Line({ region }) {
                             <p>{c.post}</p>
                            
                             <div className="home__buttons">
+                            {c.orderis === 0 ?
                                 <button  style={{
                                     backgroundColor: color
-                                }} type="button" className="btn btn-outline-danger">{tit}</button>
-                            
+                                }} type="button" className="btn btn-outline-danger">{tit}</button> :
+                                <button style={{
+                                    backgroundColor: 'orange'
+                                }} type="button" className="btn btn-outline-danger">Confirmed</button>
+                            }
                             </div>
                         </li> : null)
                     }

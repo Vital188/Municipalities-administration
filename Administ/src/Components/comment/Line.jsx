@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useContext } from 'react';
 import Comment from '../../Contexts/Comment';
+import axios from 'axios';
+import { authConfig } from '../../Functions/auth';
 
 function Line({ region }) {
 
@@ -8,15 +10,19 @@ function Line({ region }) {
     const [color, setColor] = useState('white');
     const [tit, setTit] = useState('Confirmation')
     
-   const add = () => {
-    setColor('orange');
-    setTit('Confirmed')
-   }
-
-    const remove = id => {
+       const remove = id => {
         setComment({id});
     }
-console.log(region)
+
+    const handleChangeOrder = () =>{
+        axios.put('http://localhost:3003/server/comments/' + region[1][0].id, {confirmed: 1}, authConfig())
+          .then(res => {
+          console.log('CONFIRMED');
+          setColor('orange');
+           setTit('Confirmed')
+          });
+ }
+console.log(region[1][0])
     return (
         <li className="list-group-item">
             <div className="home">
@@ -54,9 +60,15 @@ console.log(region)
                             <p>{c.post}</p>
                            
                             <div className="home__buttons">
-                                <button onClick={add} style={{
-                                    backgroundColor: color
-                                }} type="button" className="btn btn-outline-danger">{tit}</button>
+                                { region[1][0].orderis === 0 ?
+                                 <button onClick={handleChangeOrder} type="button" style={{
+                                    backgroundColor: color,      
+                                    color: 'black'
+                                }} className="btn btn-outline-success">{tit}</button> : <button onClick={handleChangeOrder} type="button" style={{ 
+                                    backgroundColor: 'orange',
+                                    color: 'black',
+                                    border: '1px solid black'
+                                }} className="btn btn-outline-success">CONFIRMED</button> }
                             
                             <div className="home__buttons">
                                 <button onClick={() => remove(c.id)} type="button" className="btn btn-outline-danger">Delete</button>

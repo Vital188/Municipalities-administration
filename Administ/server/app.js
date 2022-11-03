@@ -300,6 +300,20 @@ app.delete("/server/comments/:id", (req, res) => {
 //         res.send({ msg: 'OK', text: 'Thanks, for your vote.', type: 'info' });
 //     });
 // });
+
+app.put("/server/comments/:id", (req, res) => {
+    const sql = `
+    UPDATE comments
+    SET 
+    orderis = ?
+    WHERE id = ?
+    `;
+    con.query(sql, [ req.body.confirmed, req.params.id], (err, result) => {
+        if (err) throw err;
+        res.send({ rsg: 'OK', text: 'Thanks, for your vote.', type: 'info' });
+    });
+});
+
 app.put("/server/regionai/:id", (req, res) => {
     let sql;
     let r;
