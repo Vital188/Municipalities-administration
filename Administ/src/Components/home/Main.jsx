@@ -31,6 +31,7 @@ function Main() {
         useEffect(() => {
             axios.get('http://localhost:3003/home/regionai', authConfig())
                 .then(res => {
+                    console.log(res.data)
                     setRegionai((res.data));
                 })
         }, [lastUpdate]);

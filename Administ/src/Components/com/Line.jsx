@@ -1,22 +1,14 @@
 import { useState } from 'react';
-import { useContext } from 'react';
-import Comment from '../../Contexts/Comment';
+
 
 function Line({ region }) {
 
-    const { setComment } = useContext(Comment);
+
     const [color, setColor] = useState('white');
     const [tit, setTit] = useState('Waiting confirmation')
-    
-   const add = () => {
-    setColor('orange');
-    setTit('Confirmed')
-   }
 
-    const remove = id => {
-        setComment({id});
-    }
-console.log(region)
+
+
     return (
         <li className="list-group-item">
             <div className="home">
@@ -54,7 +46,7 @@ console.log(region)
                             <p>{c.post}</p>
                            
                             <div className="home__buttons">
-                                <button onClick={add} style={{
+                                <button  style={{
                                     backgroundColor: color
                                 }} type="button" className="btn btn-outline-danger">{tit}</button>
                             
