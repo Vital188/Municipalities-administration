@@ -34,7 +34,7 @@ function Main() {
     useEffect(() => {
         axios.get('http://localhost:3003/home/comments/wc', authConfig())
             .then(res => {
-                setRegions(reList(res.data));
+                setRegions((res.data));
                 setComments(res.data);
             })
     }, [lastUpdate]);
@@ -61,7 +61,8 @@ function Main() {
     return (
         <Comment.Provider value={{
             setComment,
-            regions
+            regions,
+            comments
         }}>
             <div className="container">
                 <div className="row">

@@ -46,7 +46,7 @@ function Line({ region }) {
                             }}>
                             </img>
                             
-                            <p>{c.post}</p>
+                            <textarea value={c.post} readOnly={true}>{c.post}</textarea>
                            
                             <div className="home__buttons">
                             {c.orderis === 0 ?

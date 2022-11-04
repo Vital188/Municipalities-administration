@@ -216,11 +216,8 @@ app.get("/home/field", (req, res) => {
 
 app.get("/home/regionai/wc", (req, res) => {
     const sql = `
-    SELECT r.*, c.id AS cid, c.post
-    FROM regionai AS r
-    INNER JOIN comments AS c
-    ON c.regionai_id = r.id
-    ORDER BY r.region
+    SELECT *
+    FROM regionai 
     `;
     con.query(sql, (err, result) => {
         if (err) throw err;

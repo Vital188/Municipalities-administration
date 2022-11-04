@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 
 function Line({ region }) {
 
-    const { setComment } = useContext(Comment);
+    const { setComment, comments } = useContext(Comment);
     const [color, setColor] = useState('white');
     const [tit, setTit] = useState('Confirmation')
     
@@ -16,7 +16,7 @@ function Line({ region }) {
     }
 
     const handleChangeOrder = () =>{
-        axios.put('http://localhost:3003/server/comments/' + region[1][0].id, {confirmed: 1}, authConfig())
+        axios.put('http://localhost:3003/server/comments/' + region.id, {confirmed: 1}, authConfig())
           .then(res => {
           console.log('CONFIRMED');
           setColor('orange');
@@ -31,45 +31,60 @@ function Line({ region }) {
      if (null === region) {
          return;
      }
-     setStats(s => ({ ...s, regionCount: region[1].length }));
+     setStats(s => ({ ...s, regionCount: region.length }));
  }, [region]);
-
+    console.log(region)
     return (
         
-        <li className="list-group-item">
-            <div className="home">
+        <li className="list-group-item" style={{
+            border: '2px solid black',
+            borderRadius: '15px',
+            marginTop: '10px'
+        }}>
+            <div className="home" style={{
+                justifyContent: 'center'
+            }}>
                 <div className="home__content">
-                     <h1>Municipality:</h1>               
-                    <div className="home__content__info">
-                        <h2>{region[1][0].region} </h2>
-                        {region[1][0].image ? <div className='img-bin'>
-                            <img src={region[1][0].image} alt={region}>
+                                 
+                    <div className="home__content__info" style={{
+                        flexDirection: 'column'
+                    }}>
+                        <h2>{region.region} </h2>
+                        {region.image ? <div className='img-bin'>
+                            <img src={region.image} alt={region}>
                             </img>
-                        </div> : null}
-                    </div>
-                    
-                </div>
-            </div>
-            <div className="comments">
-                <h2>Services and comments({stats.regionCount}):</h2>
-                <ul className="list-group">
-                    {
-                        region[1]?.map(c => c.id !== null ? <li key={c.id} className="home__content__info" style={{
-                            justifyContent: 'space-between',
-                            border: '2px solid black',
-                            marginBottom: '20px',
-                            padding: '20px'
-                        }}>
-                            <h2>{c.title}</h2>
-                            <img src={c.image2} alt={c.region} style={{
+                        </div> : null} 
+                   </div>   
+                   <div className="home__content__info" style={{
+                        flexDirection: 'column',
+                        justifyContent: 'flex-start'
+                    }}>
+                                  <h2>{region.title}</h2>
+                            <img src={region.image2} alt={region} style={{
                                 width: '100px'
                             }}>
                             </img>
+                    </div> 
+                    
+                </div>
+            </div>
+            <div className="comments" style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginTop: '50px',
+                flexDirection: 'column'
+            }}>
+                <h2>Comment:</h2>
+                <p style={{
+                    border: '1px solid',
+                    height: '88px',
+                    padding: '10px'
+                }}>{region.post}</p>
+                <div className="home__content__info">
+                </div>  
                             
-                            <p>{c.post}</p>
-                           
-                            <div className="home__buttons">
-                                { c.orderis === 0 ?
+                        <div className="home__buttons">
+                                { region.orderis === 0 ?
                                  <button onClick={handleChangeOrder} type="button" style={{
                                     backgroundColor: color,      
                                     color: 'black'
@@ -78,13 +93,9 @@ function Line({ region }) {
                                     color: 'black',
                                     border: '1px solid black'
                                 }} className="btn btn-outline-success">CONFIRMED</button> }
-                            
-                            <div className="home__buttons">
-                                <button onClick={() => remove(c.id)} type="button" className="btn btn-outline-danger">Delete</button>
-                            </div></div>
-                        </li> : null)
-                    }
-                </ul> 
+                                <button onClick={() => remove(region.id)} type="button" className="btn btn-outline-danger">Delete</button>
+                            </div> 
+                 
             </div>
         </li>
     )
