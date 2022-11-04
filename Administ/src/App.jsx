@@ -154,7 +154,7 @@ function LogoutPage({ setRoleChange }) {
   useEffect(() => {
     logout();
     setRoleChange(Date.now());
-    makeMsg('Bye, bye, see you next time.', 'info');
+    makeMsg('Thank you for participation! welcome next time !', 'info');
   }, [setRoleChange, makeMsg]);
 
   return (
