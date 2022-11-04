@@ -14,24 +14,10 @@ function Main() {
         const [comment, setComment] = useState(null);
         const { makeMsg } = useContext(DataContext);
 
-        const reList = data => {
-            const d = new Map();
-            data.forEach(line => {
-                if (d.has(line.region)) {
-                    d.set(line.region, [...d.get(line.region), line]);
-                } else {
-                    d.set(line.region, [line]);
-                }
-            });
-            return [...d];
-        }
-
-
         // READ for list
         useEffect(() => {
             axios.get('http://localhost:3003/home/regionai', authConfig())
                 .then(res => {
-                    console.log(res.data)
                     setRegionai((res.data));
                 })
         }, [lastUpdate]);
@@ -54,7 +40,7 @@ function Main() {
             })
          }, [comment, makeMsg]);
    
- console.log(comment)      
+       
 
       return (
         <Home.Provider value={{

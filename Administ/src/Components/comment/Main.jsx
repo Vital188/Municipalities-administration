@@ -33,13 +33,6 @@ function Main() {
             })
     }, [lastUpdate]);
 
-    // useEffect(() => {
-    //     axios.get('http://localhost:3003/home/field/wc', authConfig())
-    //         .then(res => {
-    //             setField((res.data));
-    //         })
-    // }, [lastUpdate]);
-
     useEffect(() => {
         if (null === comment) {
             return;
@@ -50,7 +43,7 @@ function Main() {
                 makeMsg(res.data.text, res.data.type);
             })
     }, [comment, makeMsg]);
-
+   
     return (
         <Comment.Provider value={{
             setComment,

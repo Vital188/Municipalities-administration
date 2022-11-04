@@ -1,25 +1,16 @@
-import { useState } from 'react';
-
-
-function Line({ region }) {
-
-
-    const [color, setColor] = useState('skyblue');
-    const [tit, setTit] = useState('Waiting confirmation')
-
-
-console.log(region) 
+function Line({ regionas }) {
+ 
     return (
         <li className="list-group-item">
             <div className="home">
                 <div className="home__content" style={{
-                    // gap: '450px'
+                   
                 }}>
                     <h1>Municipality:</h1>
                     <div className="home__content__info">
-                        <h2>{region[1][0].region} </h2>
-                        {region[1][0].image ? <div className='img-bin'>
-                            <img src={region[1][0].image} alt={region}>
+                        <h2>{regionas[1][0].region} </h2>
+                        {regionas[1][0].image ? <div className='img-bin'>
+                            <img src={regionas[1][0].image} alt={regionas}>
                             </img>
                         </div> : null}
                     </div>
@@ -31,7 +22,7 @@ console.log(region)
                 <h2>Services and comments:</h2>
                 <ul className="list-group">
                     {
-                        region[1]?.map(c => c.id !== null ? <li key={c.id} className="home__content__info" style={{
+                        regionas[1]?.map(c => c.id !== null ? <li key={c.id} className="home__content__info" style={{
                             justifyContent: 'space-between',
                             border: '2px solid black',
                             marginBottom: '20px',
@@ -48,8 +39,8 @@ console.log(region)
                             <div className="home__buttons">
                             {c.orderis === 0 ?
                                 <button  style={{
-                                    backgroundColor: color
-                                }} type="button" className="btn btn-outline-danger">{tit}</button> :
+                                    backgroundColor: 'skyblue'
+                                }} type="button" className="btn btn-outline-danger">Waiting confirmation</button> :
                                 <button style={{
                                     backgroundColor: 'orange'
                                 }} type="button" className="btn btn-outline-danger">Confirmed</button>

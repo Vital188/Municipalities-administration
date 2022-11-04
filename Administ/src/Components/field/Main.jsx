@@ -18,14 +18,6 @@ function Main() {
     const [editData, setEditData] = useState(null);
     const { makeMsg } = useContext(DataContext);
 
-    // READ for list
-    // useEffect(() => {
-    //     axios.get('http://localhost:3003/server/regionai', authConfig())
-    //         .then(res => {
-    //             setRegionai(res.data);
-    //         })
-    // }, [lastUpdate]);
-
     useEffect(() => {
         axios.get('http://localhost:3003/server/field', authConfig())
             .then(res => {

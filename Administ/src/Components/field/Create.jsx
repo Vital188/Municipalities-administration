@@ -17,7 +17,6 @@ function Create() {
         getBase64(fileInput.current.files[0])
             .then(photo => setPhotoPrint2(photo))
             .catch(_ => {
-                // tylim
             })
     }
 

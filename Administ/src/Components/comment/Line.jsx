@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import Comment from '../../Contexts/Comment';
 import axios from 'axios';
 import { authConfig } from '../../Functions/auth';
+import { useEffect } from 'react';
 
 function Line({ region }) {
 
@@ -22,14 +23,23 @@ function Line({ region }) {
            setTit('Confirmed')
           });
  }
-console.log(region[1][0])
+
+ const [stats, setStats] = useState({ regionCount: null });
+
+    
+ useEffect(() => {
+     if (null === region) {
+         return;
+     }
+     setStats(s => ({ ...s, regionCount: region[1].length }));
+ }, [region]);
+
     return (
+        
         <li className="list-group-item">
             <div className="home">
-                <div className="home__content" style={{
-                    // gap: '450px'
-                }}>
-                    <h1>Municipality:</h1>
+                <div className="home__content">
+                     <h1>Municipality:</h1>               
                     <div className="home__content__info">
                         <h2>{region[1][0].region} </h2>
                         {region[1][0].image ? <div className='img-bin'>
@@ -38,11 +48,10 @@ console.log(region[1][0])
                         </div> : null}
                     </div>
                     
-                    
                 </div>
             </div>
             <div className="comments">
-                <h2>Services and comments:</h2>
+                <h2>Services and comments({stats.regionCount}):</h2>
                 <ul className="list-group">
                     {
                         region[1]?.map(c => c.id !== null ? <li key={c.id} className="home__content__info" style={{
@@ -60,7 +69,7 @@ console.log(region[1][0])
                             <p>{c.post}</p>
                            
                             <div className="home__buttons">
-                                { region[1][0].orderis === 0 ?
+                                { c.orderis === 0 ?
                                  <button onClick={handleChangeOrder} type="button" style={{
                                     backgroundColor: color,      
                                     color: 'black'

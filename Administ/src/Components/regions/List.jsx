@@ -14,7 +14,7 @@ function List() {
             <div className="card-body">
                 <ul className="list-group">
                     {
-                        regionai?.map(r => <Line key={r.id} regionai={r} />)
+                        regionai?.map(rid => <Line key={rid.id} regionai={rid} />)
                     }
                 </ul>
             </div>

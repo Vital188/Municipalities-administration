@@ -1,11 +1,9 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import { useContext } from "react";
+import { useState,useContext,useEffect } from "react";
 import Home from "../../Contexts/Home";
 import Line from "./Line";
 
 function List() {
-  const { regionai, field, setRegions } = useContext(Home);
+  const { regionai, field } = useContext(Home);
 
   const [stats, setStats] = useState({ regionsCount: null });
   const [st, setSt] = useState({ fieldCount: null });
@@ -63,9 +61,9 @@ function List() {
               <option value={0} disabled>
                 Choose municipality from list:
               </option>
-              {regionai?.map((r) => (
-                <option key={r.id} value={r.region}>
-                  {r.region}
+              {regionai?.map((reg) => (
+                <option key={reg.id} value={reg.region}>
+                  {reg.region}
                 </option>
               ))}
             </select>
@@ -118,14 +116,14 @@ function List() {
           </ul>
           <ul className="list-group">
             <div className="home">
-              {serFiltered?.map((f) => (
-                <div key={f.id} fil={f} className="home__content__info">
-                  {f.image2 ? (
+              {serFiltered?.map((fid) => (
+                <div key={fid.id} fil={fid} className="home__content__info">
+                  {fid.image2 ? (
                     <div className="img-bin">
-                      <img src={f.image2} alt={f}></img>
+                      <img src={fid.image2} alt={fid}></img>
                     </div>
                   ) : null}
-                  <h2>{f.title}</h2>
+                  <h2>{fid.title}</h2>
                 </div>
               ))}
             </div>
