@@ -102,7 +102,7 @@ function List() {
           <ul
             className="list-group"
             style={{
-              width: "500px",
+              // width: "500px",
             }}
           >
             {regFiltered?.map((r) => (

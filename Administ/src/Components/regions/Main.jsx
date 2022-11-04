@@ -67,7 +67,7 @@ function Main() {
             });
     }, [editData, makeMsg]);
 
-   console.log(regionai)
+
     return (
         <Regions.Provider value={{
             setCreateData,

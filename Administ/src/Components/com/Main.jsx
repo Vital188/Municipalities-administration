@@ -11,6 +11,8 @@ function Main() {
     const [regions, setRegions] = useState(null);
     const [comment, setComment] = useState(null);
     const { makeMsg } = useContext(DataContext);
+    const [comments, setComments] = useState(null)
+    const [stats, setStats] = useState({ commentsCount: null });
 
     const reList = data => {
         const d = new Map();
@@ -24,11 +26,14 @@ function Main() {
         return [...d];
     }
 
+    
+
     // READ for list
     useEffect(() => {
         axios.get('http://localhost:3003/home/comments/wc', authConfig())
             .then(res => {
                 setRegions(reList(res.data));
+                setComments(res.data);
             })
     }, [lastUpdate]);
 
@@ -44,6 +49,13 @@ function Main() {
             })
     }, [comment, makeMsg]);
 
+    useEffect(() => {
+        if (null === comments) {
+            return;
+        }
+        setStats(s => ({ ...s, commentsCount: comments.length }));
+    }, [comments]);
+
     return (
         <Comment.Provider value={{
             setComment,
@@ -52,7 +64,7 @@ function Main() {
             <div className="container">
                 <div className="row">
                     <div className="col-12">
-                        <List />
+                        <List stats={stats.commentsCount} />
                     </div>
                 </div>
             </div>

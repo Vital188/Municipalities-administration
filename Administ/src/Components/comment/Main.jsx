@@ -9,10 +9,11 @@ function Main() {
 
     const [lastUpdate, setLastUpdate] = useState(Date.now());
     const [regions, setRegions] = useState(null);
-
+    const [comments, setComments] = useState(null)
     const [comment, setComment] = useState(null);
     const { makeMsg } = useContext(DataContext);
-
+    const [stats, setStats] = useState({ commentsCount: null });
+    
     const reList = data => {
         const d = new Map();
         data.forEach(line => {
@@ -24,15 +25,21 @@ function Main() {
         });
         return [...d];
     }
+    
+
+    
+   
 
     // READ for list
     useEffect(() => {
         axios.get('http://localhost:3003/home/comments/wc', authConfig())
             .then(res => {
                 setRegions(reList(res.data));
+                setComments(res.data);
             })
     }, [lastUpdate]);
 
+   
     useEffect(() => {
         if (null === comment) {
             return;
@@ -43,7 +50,14 @@ function Main() {
                 makeMsg(res.data.text, res.data.type);
             })
     }, [comment, makeMsg]);
-   
+
+    useEffect(() => {
+        if (null === comments) {
+            return;
+        }
+        setStats(s => ({ ...s, commentsCount: comments.length }));
+    }, [comments]);
+ 
     return (
         <Comment.Provider value={{
             setComment,
@@ -52,7 +66,7 @@ function Main() {
             <div className="container">
                 <div className="row">
                     <div className="col-12">
-                        <List />
+                        <List stats={stats.commentsCount}/>
                     </div>
                 </div>
             </div>
