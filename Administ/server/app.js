@@ -191,8 +191,11 @@ app.get("/server/field", (req, res) => {
 
 app.get("/home/regionai", (req, res) => {
     const sql = `
-    SELECT *
-    FROM regionai 
+    SELECT r.*, f.id AS fid, f.title, f.image2
+    FROM regionai AS r
+    INNER JOIN field AS f
+    ON r.field_id = f.id
+    ORDER BY r.region
     `;
     con.query(sql, (err, result) => {
         if (err) throw err;

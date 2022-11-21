@@ -42,7 +42,7 @@ function List() {
     setRegFiltered([]);
     setSerFiltered([])
   }
-
+console.log(regionai)
   return (
     <>
       <div className="card m-4">
@@ -114,20 +114,7 @@ function List() {
               />
             ))}
           </ul>
-          <ul className="list-group">
-            <div className="home">
-              {serFiltered?.map((fid) => (
-                <div key={fid.id} fil={fid} className="home__content__info">
-                  {fid.image2 ? (
-                    <div className="img-bin">
-                      <img src={fid.image2} alt={fid}></img>
-                    </div>
-                  ) : null}
-                  <h2>{fid.title}</h2>
-                </div>
-              ))}
-            </div>
-          </ul>
+          
         </div>
       </div>
     </>

@@ -26,7 +26,7 @@ function Line({  regions,  serFiltered, stop }) {
   const typ = Number(serFiltered?.map((el) => el.id));
   const img = String(serFiltered?.map((el) => el.image2));
   const tit = String(serFiltered?.map((el) => el.title));
-
+  console.log(regions)
  
   return (
     <div className="home__content">
@@ -49,7 +49,19 @@ function Line({  regions,  serFiltered, stop }) {
             ) : null
           )}
         </ul>
-
+        <ul className="list-group">
+            <div className="home">
+            <div className="home__content__info">
+        {regions.images ? (
+                    <div className="img-bin">
+                      <img src={regions.images} alt='upload'></img>
+                    </div>
+                  ) : null}
+                  <h2>{regions.title}</h2>
+                </div>
+            
+            </div>
+          </ul>
 
 { pat === 0
         ? 
